@@ -12,11 +12,15 @@
     <input type="text" id="username" placeholder="Enter Username">
     <input type="password" id="password" placeholder="Enter Password">
     
-    <button onclick="register()">Register</button>
-    <button onclick="login()">Login</button>
+    <button id="registerBtn">Register</button>
+    <button id="loginBtn">Login</button>
     
     <p id="message"></p>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById("registerBtn").addEventListener("click", register);
+        document.getElementById("loginBtn").addEventListener("click", login);
+    </script>
 </body>
 </html>
