@@ -1,22 +1,12 @@
 body {
     font-family: 'Arial', sans-serif;
     text-align: center;
-    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Blue gradient */
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 0;
+    background-color: #f4f4f4;
+    margin-top: 50px;
 }
 
-/* Container for better alignment */
-.container {
-    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
+h2 {
+    color: #333;
 }
 
 /* Green Text Boxes */
