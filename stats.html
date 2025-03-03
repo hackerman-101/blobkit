@@ -12,7 +12,13 @@
     <button onclick="logout()">Logout</button>
 
     <script>
-        document.getElementById("user").innerText = localStorage.getItem("currentUser") || "Guest";
+        let currentUser = localStorage.getItem("currentUser");
+        if (!currentUser) {
+            window.location.href = "index.html";
+        } else {
+            document.getElementById("user").innerText = currentUser;
+        }
+
         function logout() {
             localStorage.removeItem("currentUser");
             window.location.href = "index.html";
