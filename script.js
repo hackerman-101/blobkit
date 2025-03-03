@@ -1,6 +1,6 @@
 function register() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("password").value.trim();
     let message = document.getElementById("message");
 
     if (!username || !password) {
@@ -11,7 +11,7 @@ function register() {
     let users = JSON.parse(localStorage.getItem("users")) || {};
 
     if (users[username]) {
-        message.innerText = "This username is already registered. Please login.";
+        message.innerText = "Username already registered! Try logging in.";
     } else {
         users[username] = password;
         localStorage.setItem("users", JSON.stringify(users));
@@ -21,8 +21,8 @@ function register() {
 }
 
 function login() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("password").value.trim();
     let message = document.getElementById("message");
 
     if (!username || !password) {
@@ -31,6 +31,8 @@ function login() {
     }
 
     let users = JSON.parse(localStorage.getItem("users")) || {};
+
+    console.log("Stored Users:", users); // Debugging log
 
     if (users[username] && users[username] === password) {
         localStorage.setItem("currentUser", username);
