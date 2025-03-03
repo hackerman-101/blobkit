@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Welcome, <span id="user"></span>!</h2>
+    <p>Your stats will appear here.</p>
+    <button onclick="logout()">Logout</button>
+
+    <script>
+        document.getElementById("user").innerText = localStorage.getItem("currentUser") || "Guest";
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
