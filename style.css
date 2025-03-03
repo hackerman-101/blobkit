@@ -1,15 +1,61 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
+    background-color: #f4f4f4;
     margin-top: 50px;
 }
+
+h2 {
+    color: #333;
+}
+
 input {
     display: block;
     margin: 10px auto;
-    padding: 8px;
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
 }
+
 button {
-    padding: 10px 15px;
+    display: block;
+    margin: 10px auto;
+    padding: 12px 20px;
+    width: 200px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #49a6ff, #003366);
+    border: none;
+    border-radius: 15px;
     cursor: pointer;
-    margin: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* Special styling for register and login buttons */
+#registerBtn {
+    background: linear-gradient(45deg, #ff914d, #ff4500);
+}
+
+#loginBtn {
+    background: linear-gradient(45deg, #4caf50, #008000);
+}
+
+p {
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
 }
