@@ -38,7 +38,7 @@ function login() {
         localStorage.setItem("currentUser", username);
         window.location.href = "stats.html";
     } else {
-        message.innerText = "Invalid username or password!";
+        message.innerText = "Invalid username or password";
     }
 }
 let clicks = 0;
@@ -54,22 +54,6 @@ document.getElementById("clickButton").addEventListener("click", function() {
     }
 });
 
-let clicks = localStorage.getItem("clicks") ? parseInt(localStorage.getItem("clicks")) : 0;
-let tokens = localStorage.getItem("tokens") ? parseInt(localStorage.getItem("tokens")) : 0;
-
-document.getElementById("clicks").textContent = clicks;
-document.getElementById("tokens").textContent = tokens;
-
-document.getElementById("clickButton").addEventListener("click", function() {
-    clicks++;
-    document.getElementById("clicks").textContent = clicks;
-    localStorage.setItem("clicks", clicks);
-
-    if (clicks % 100 === 0) {
-        tokens++;
-        document.getElementById("tokens").textContent = tokens;
-        localStorage.setItem("tokens", tokens);
-    }
     let clicks = localStorage.getItem("clicks") ? parseInt(localStorage.getItem("clicks")) : 0;
 let tokens = localStorage.getItem("tokens") ? parseInt(localStorage.getItem("tokens")) : 0;
 
