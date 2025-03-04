@@ -52,52 +52,7 @@ button:hover {
     transform: translateY(-2px);
     box-shadow: 0px 7px 0px #2e7d32;
 }
-/* Existing styles... */
 
-/* Daily Wheel Styles */
-.wheel-container {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 20px auto;
-}
-
-.wheel {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(
-    red 0deg 45deg,
-    blue 45deg 90deg,
-    green 90deg 135deg,
-    yellow 135deg 180deg,
-    orange 180deg 225deg,
-    purple 225deg 270deg,
-    pink 270deg 315deg,
-    cyan 315deg 360deg
-  );
-  transition: transform 3s ease-out;
-}
-
-.pointer {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 30px solid black;
-}
-
-.spin-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
 button:active {
     transform: translateY(2px);
     box-shadow: 0px 2px 0px #2e7d32;
