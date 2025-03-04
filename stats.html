@@ -3,31 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stats Page</title>
+    <title>Stats & Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Welcome, <span id="user"></span>!</h2>
-    <p>Your stats will appear here.</p>
-    <button onclick="logout()">Logout</button>
+    <h2>Your Stats</h2>
+    <p>Tokens: <span id="tokens">0</span></p>
 
-    <script>
-        let currentUser = localStorage.getItem("currentUser");
-        if (!currentUser) {
-            window.location.href = "index.html";
-        } else {
-            document.getElementById("user").innerText = currentUser;
-        }
+    <h2>Click to Earn Tokens!</h2>
+    <p>Clicks: <span id="clicks">0</span></p>
+    <button id="clickButton">
+        <img src="token.png" alt="Token" width="50">
+    </button>
 
-        function logout() {
-            localStorage.removeItem("currentUser");
-            window.location.href = "index.html";
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-<button id="clickButton">
-    <img src="token.png" alt="Token" width="50">
-</button>
-<p>Clicks: <span id="clicks">0</span></p>
-<p>Tokens: <span id="tokens">0</span></p>
