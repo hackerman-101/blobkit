@@ -70,3 +70,20 @@ document.getElementById("clickButton").addEventListener("click", function() {
         document.getElementById("tokens").textContent = tokens;
         localStorage.setItem("tokens", tokens);
     }
+    let clicks = localStorage.getItem("clicks") ? parseInt(localStorage.getItem("clicks")) : 0;
+let tokens = localStorage.getItem("tokens") ? parseInt(localStorage.getItem("tokens")) : 0;
+
+document.getElementById("clicks").textContent = clicks;
+document.getElementById("tokens").textContent = tokens;
+
+document.getElementById("clickButton").addEventListener("click", function() {
+    clicks++;
+    document.getElementById("clicks").textContent = clicks;
+    localStorage.setItem("clicks", clicks);
+
+    if (clicks % 100 === 0) {
+        tokens++;
+        document.getElementById("tokens").textContent = tokens;
+        localStorage.setItem("tokens", tokens);
+    }
+});
