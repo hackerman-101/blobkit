@@ -41,3 +41,15 @@ function login() {
         message.innerText = "Invalid username or password!";
     }
 }
+let clicks = 0;
+let tokens = 0;
+
+document.getElementById("clickButton").addEventListener("click", function() {
+    clicks++;
+    document.getElementById("clicks").textContent = clicks;
+
+    if (clicks % 100 === 0) {
+        tokens++;
+        document.getElementById("tokens").textContent = tokens;
+    }
+});
