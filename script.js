@@ -1,51 +1,43 @@
-// User authentication (simple localStorage-based system)
-document.addEventListener("DOMContentLoaded", function() {
-    if (document.getElementById("register")) {
-        document.getElementById("register").addEventListener("click", function() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            if (username && password) {
-                localStorage.setItem("user_" + username, password);
-                localStorage.setItem("tokens_" + username, 0);
-                alert("Account created! Please log in.");
-            } else {
-                alert("Please fill in both fields.");
-            }
-        });
+function register() {
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let message = document.getElementById("message");
+
+    if (!username || !password) {
+        message.innerText = "enter both username and password";
+        return;
     }
 
-    if (document.getElementById("login")) {
-        document.getElementById("login").addEventListener("click", function() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            if (localStorage.getItem("user_" + username) === password) {
-                localStorage.setItem("loggedInUser", username);
-                window.location.href = "stats.html";
-            } else {
-                alert("Invalid login!");
-            }
-        });
+    let users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (users[username]) {
+        message.innerText = "Username already registered";
+    } else {
+        users[username] = password;
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("currentUser", username);
+        window.location.href = "stats.html";
     }
-});
+}
 
-// Clicker Game Logic (Only runs on stats.html)
-if (document.getElementById("clickButton")) {
-    let username = localStorage.getItem("loggedInUser");
-    let clicks = localStorage.getItem("clicks_" + username) ? parseInt(localStorage.getItem("clicks_" + username)) : 0;
-    let tokens = localStorage.getItem("tokens_" + username) ? parseInt(localStorage.getItem("tokens_" + username)) : 0;
+function login() {
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let message = document.getElementById("message");
 
-    document.getElementById("clicks").textContent = clicks;
-    document.getElementById("tokens").textContent = tokens;
+    if (!username || !password) {
+        message.innerText = "Please enter both username and password!";
+        return;
+    }
 
-    document.getElementById("clickButton").addEventListener("click", function() {
-        clicks++;
-        document.getElementById("clicks").textContent = clicks;
-        localStorage.setItem("clicks_" + username, clicks);
+    let users = JSON.parse(localStorage.getItem("users")) || {};
 
-        if (clicks % 100 === 0) {
-            tokens++;
-            document.getElementById("tokens").textContent = tokens;
-            localStorage.setItem("tokens_" + username, tokens);
-        }
-    });
+    console.log("Stored Users:", users); // Debugging log
+
+    if (users[username] && users[username] === password) {
+        localStorage.setItem("currentUser", username);
+        window.location.href = "stats.html";
+    } else {
+        message.innerText = "Invalid username or password!";
+    }
 }
