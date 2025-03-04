@@ -67,3 +67,28 @@ if (spinButton) {
     }
   });
 }
+
+const updateCountdown = () => {
+  const lastSpinTime = localStorage.getItem('lastSpinTime');
+  if (lastSpinTime) {
+    const currentTime = new Date().getTime();
+    const timeDiff = currentTime - parseInt(lastSpinTime, 10);
+    const hoursDiff = timeDiff / (1000 * 60 * 60);
+
+    if (hoursDiff < 24) {
+      const hoursLeft = Math.floor(24 - hoursDiff);
+      const minutesLeft = Math.floor((24 - hoursDiff - hoursLeft) * 60);
+      spinButton.textContent = `Spin again in ${hoursLeft}h ${minutesLeft}m`;
+      spinButton.disabled = true;
+    } else {
+      spinButton.textContent = 'Spin the Wheel';
+      spinButton.disabled = false;
+    }
+  }
+};
+
+// Update the countdown every minute
+setInterval(updateCountdown, 60000);
+
+// Initial check
+updateCountdown();
