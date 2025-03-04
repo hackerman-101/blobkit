@@ -41,3 +41,29 @@ function login() {
         message.innerText = "Invalid username or password!";
     }
 }
+
+// Existing logic for login/register...
+
+// Daily Wheel Logic
+const wheel = document.getElementById('wheel');
+const spinButton = document.getElementById('spin-button');
+
+if (spinButton) {
+  spinButton.addEventListener('click', async () => {
+    spinButton.disabled = true; // Disable button during spin
+    const response = await fetch('/api/spin-wheel', { method: 'POST' });
+    const result = await response.json();
+
+    if (result.success) {
+      const randomRotation = 360 * 5 + result.rotation; // Spin multiple times
+      wheel.style.transform = `rotate(${randomRotation}deg)`;
+      setTimeout(() => {
+        alert(`You won ${result.tokens} tokens!`);
+        spinButton.disabled = false; // Re-enable button
+      }, 3000); // Match the duration of the spin animation
+    } else {
+      alert(result.message); // Show error message
+      spinButton.disabled = false; // Re-enable button
+    }
+  });
+}
