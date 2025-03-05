@@ -27,6 +27,32 @@ button {
     margin-top: 10px;
 }
 
+/* Blooket-style buttons */
+.blooket-btn {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px; /* Rounded edges */
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px #3b7d3b; /* Drop shadow */
+    transition: all 0.2s;
+    margin-top: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.blooket-btn:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+}
+
+.blooket-btn:active {
+    box-shadow: 0 2px #3b7d3b; /* Pressed effect */
+    transform: translateY(2px);
+}
+
+
 button:hover {
     background-color: #45a049;
 }
