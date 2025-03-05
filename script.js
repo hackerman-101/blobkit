@@ -56,11 +56,10 @@ document.getElementById("logoutButton").addEventListener("click", function() {
     window.location.href = "index.html"; // Redirect to login page
 });
 
-// Open or create the database
+// Open or create IndexedDB database
 let db;
 let request = indexedDB.open("GameDB", 1);
 
-// Runs if database needs an upgrade (first time opening)
 request.onupgradeneeded = function(event) {
     db = event.target.result;
     let store = db.createObjectStore("playerData", { keyPath: "username" });
@@ -68,41 +67,38 @@ request.onupgradeneeded = function(event) {
     store.createIndex("tokens", "tokens", { unique: false });
 };
 
-// Runs when the database successfully opens
 request.onsuccess = function(event) {
     db = event.target.result;
 };
 
-// If an error happens
-request.onerror = function(event) {
-    console.log("Error opening IndexedDB:", event.target.errorCode);
-};
-
+// Function to save data in IndexedDB
 function saveData(username, clicks, tokens) {
     let transaction = db.transaction(["playerData"], "readwrite");
     let store = transaction.objectStore("playerData");
-
     let data = { username: username, clicks: clicks, tokens: tokens };
     store.put(data);
 }
 
+// Function to load data from IndexedDB
 function loadData(username, callback) {
     let transaction = db.transaction(["playerData"], "readonly");
     let store = transaction.objectStore("playerData");
-
     let request = store.get(username);
+
     request.onsuccess = function(event) {
         let data = event.target.result;
         if (data) {
             callback(data.clicks, data.tokens);
         } else {
-            callback(0, 0); // Default values if no data found
+            callback(0, 0);
         }
     };
 }
 
+// Get username
 let username = localStorage.getItem("loggedInUser");
 
+// Load data when page loads
 document.addEventListener("DOMContentLoaded", function() {
     loadData(username, function(clicks, tokens) {
         document.getElementById("clicks").textContent = clicks;
@@ -110,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// Clicker button functionality
 document.getElementById("clickButton").addEventListener("click", function() {
     let clicks = parseInt(document.getElementById("clicks").textContent) + 1;
     let tokens = parseInt(document.getElementById("tokens").textContent);
@@ -120,8 +117,44 @@ document.getElementById("clickButton").addEventListener("click", function() {
 
     document.getElementById("clicks").textContent = clicks;
     document.getElementById("tokens").textContent = tokens;
-
     saveData(username, clicks, tokens);
 });
 
+// Manual Save Button
+document.getElementById("saveProgress").addEventListener("click", function() {
+    let clicks = parseInt(document.getElementById("clicks").textContent);
+    let tokens = parseInt(document.getElementById("tokens").textContent);
 
+    let data = { username: username, clicks: clicks, tokens: tokens };
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+    let downloadAnchor = document.createElement("a");
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "progress.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+});
+
+// Manual Load Button
+document.getElementById("loadProgress").addEventListener("click", function() {
+    document.getElementById("fileInput").click();
+});
+
+document.getElementById("fileInput").addEventListener("change", function(event) {
+    let file = event.target.files[0];
+    if (!file) return;
+    
+    let reader = new FileReader();
+    reader.onload = function(event) {
+        let data = JSON.parse(event.target.result);
+        if (data.username === username) {
+            document.getElementById("clicks").textContent = data.clicks;
+            document.getElementById("tokens").textContent = data.tokens;
+            saveData(username, data.clicks, data.tokens);
+            alert("Progress Loaded!");
+        } else {
+            alert("This save file does not match your username.");
+        }
+    };
+    reader.readAsText(file);
+});
