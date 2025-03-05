@@ -62,13 +62,19 @@ let request = indexedDB.open("GameDB", 1);
 
 request.onupgradeneeded = function(event) {
     db = event.target.result;
-    let store = db.createObjectStore("playerData", { keyPath: "username" });
-    store.createIndex("clicks", "clicks", { unique: false });
-    store.createIndex("tokens", "tokens", { unique: false });
+    if (!db.objectStoreNames.contains("playerData")) {
+        let store = db.createObjectStore("playerData", { keyPath: "username" });
+        store.createIndex("clicks", "clicks", { unique: false });
+        store.createIndex("tokens", "tokens", { unique: false });
+    }
 };
 
 request.onsuccess = function(event) {
     db = event.target.result;
+};
+
+request.onerror = function(event) {
+    console.error("IndexedDB Error:", event.target.errorCode);
 };
 
 // Function to save data in IndexedDB
@@ -76,7 +82,15 @@ function saveData(username, clicks, tokens) {
     let transaction = db.transaction(["playerData"], "readwrite");
     let store = transaction.objectStore("playerData");
     let data = { username: username, clicks: clicks, tokens: tokens };
-    store.put(data);
+    let request = store.put(data);
+
+    request.onsuccess = function() {
+        console.log("Game data saved successfully!");
+    };
+
+    request.onerror = function(event) {
+        console.error("Error saving data:", event.target.error);
+    };
 }
 
 // Function to load data from IndexedDB
@@ -90,8 +104,12 @@ function loadData(username, callback) {
         if (data) {
             callback(data.clicks, data.tokens);
         } else {
-            callback(0, 0);
+            callback(0, 0); // Default values if no data found
         }
+    };
+
+    request.onerror = function(event) {
+        console.error("Error loading data:", event.target.error);
     };
 }
 
@@ -100,6 +118,7 @@ let username = localStorage.getItem("loggedInUser");
 
 // Load data when page loads
 document.addEventListener("DOMContentLoaded", function() {
+    if (!db) return; // Prevent errors if IndexedDB hasn't loaded
     loadData(username, function(clicks, tokens) {
         document.getElementById("clicks").textContent = clicks;
         document.getElementById("tokens").textContent = tokens;
@@ -120,7 +139,7 @@ document.getElementById("clickButton").addEventListener("click", function() {
     saveData(username, clicks, tokens);
 });
 
-// Manual Save Button
+// Manual Save Button (Download JSON File)
 document.getElementById("saveProgress").addEventListener("click", function() {
     let clicks = parseInt(document.getElementById("clicks").textContent);
     let tokens = parseInt(document.getElementById("tokens").textContent);
@@ -132,10 +151,10 @@ document.getElementById("saveProgress").addEventListener("click", function() {
     downloadAnchor.setAttribute("download", "progress.json");
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
-    downloadAnchor.remove();
+    document.body.removeChild(downloadAnchor);
 });
 
-// Manual Load Button
+// Manual Load Button (Upload JSON File)
 document.getElementById("loadProgress").addEventListener("click", function() {
     document.getElementById("fileInput").click();
 });
@@ -146,14 +165,18 @@ document.getElementById("fileInput").addEventListener("change", function(event) 
     
     let reader = new FileReader();
     reader.onload = function(event) {
-        let data = JSON.parse(event.target.result);
-        if (data.username === username) {
-            document.getElementById("clicks").textContent = data.clicks;
-            document.getElementById("tokens").textContent = data.tokens;
-            saveData(username, data.clicks, data.tokens);
-            alert("Progress Loaded!");
-        } else {
-            alert("This save file does not match your username.");
+        try {
+            let data = JSON.parse(event.target.result);
+            if (data.username === username) {
+                document.getElementById("clicks").textContent = data.clicks;
+                document.getElementById("tokens").textContent = data.tokens;
+                saveData(username, data.clicks, data.tokens);
+                alert("Progress Loaded!");
+            } else {
+                alert("This save file does not match your username.");
+            }
+        } catch (error) {
+            alert("Invalid save file!");
         }
     };
     reader.readAsText(file);
