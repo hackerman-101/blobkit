@@ -49,3 +49,10 @@ if (document.getElementById("clickButton")) {
         }
     });
 }
+
+// Logout button functionality
+document.getElementById("logoutButton").addEventListener("click", function() {
+    localStorage.removeItem("loggedInUser"); // Clear stored username
+    window.location.href = "index.html"; // Redirect to login page
+});
+
