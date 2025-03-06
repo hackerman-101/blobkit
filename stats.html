@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stats & Clicker Game</title>
+    <title>Stats Page</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button class="blooket-btn" id="saveProgress">Save Progress</button>
-<button class="blooket-btn" id="loadProgress">Load Progress</button>
+    <button class="blooket-btn" id="saveProgress">Save</button>
+<button class="blooket-btn" id="loadProgress">Load</button>
 <input type="file" id="fileInput" style="display: none;"> 
     
     <button class="blooket-btn logout-btn" id="logoutButton">Logout</button>
@@ -18,6 +18,33 @@
     <h2>Click to Earn Tokens!</h2>
     <p>Clicks: <span id="clicks">0</span></p>
     <button class="blooket-btn" id="clickButton">Click Me</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Stats Page</h1>
+
+    <!-- Token Counter with Image -->
+    <div id="tokenDisplay">
+        <img src="token.png" alt="Token Icon" class="token-icon">
+        <span id="tokens">0</span>
+    </div>
+
+    <!-- Clicker Button (Token Button with Image) -->
+    <button id="clickButton" class="blooket-btn">
+        <img src="token.png" alt="Token" class="button-icon">
+        Click Me!
+    </button>
 
     <script src="script.js"></script>
 </body>
