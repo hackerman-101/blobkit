@@ -76,3 +76,18 @@ button:hover {
     transform: translateY(2px);
 }
 
+/* Clicker Button Styling */
+#clickButton {
+    background: none;  /* Remove default button background */
+    border: none;      /* Remove default button border */
+    cursor: pointer;   /* Make it clickable */
+    padding: 0;        /* Remove extra padding */
+}
+
+/* Clicker Button Image */
+.button-icon {
+    width: 100px;  /* Adjust the size */
+    height: 100px; /* Adjust the size */
+    display: block; /* Prevent inline spacing issues */
+}
+
