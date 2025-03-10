@@ -97,8 +97,8 @@ button:hover {
 
 /* Clicker Button Image */
 .button-icon {
-    width: 80px;  /* Adjust the image size */
-    height: 80px; /* Adjust the image size */
+    width: 900px;  /* Adjust the image size */
+    height: 900px; /* Adjust the image size */
     object-fit: contain; /* Prevent distortion */
 }
 
