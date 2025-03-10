@@ -181,3 +181,25 @@ document.getElementById("fileInput").addEventListener("change", function(event) 
     };
     reader.readAsText(file);
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    let tokens = parseInt(localStorage.getItem("tokens")) || 0;
+    let clicks = 0;
+    const tokenDisplay = document.getElementById("tokenCount");
+    const clickButton = document.getElementById("clickButton");
+    
+    tokenDisplay.textContent = tokens;
+    
+    if (clickButton) {
+        clickButton.addEventListener("click", function() {
+            clicks++;
+            if (clicks >= 100) {
+                tokens++;
+                localStorage.setItem("tokens", tokens);
+                tokenDisplay.textContent = tokens;
+                clicks = 0;
+            }
+        });
+    }
+});
+
