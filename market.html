@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="market-container">
+        <h1>Buy a Pack</h1>
+        <div class="pack-wrapper" id="packWrapper">
+            <img src="pack-1.png" alt="Pack" id="packImage">
+        </div>
+        <p id="blookReveal" class="hidden"></p>
+    </div>
+
+    <script>
+        const blooks = [
+            { name: "Blook 1", image: "blook1.png" },
+            { name: "Blook 2", image: "blook2.png" },
+            { name: "Blook 3", image: "blook3.png" },
+            { name: "Blook 4", image: "blook4.png" },
+            { name: "Blook 5", image: "blook5.png" }
+        ];
+
+        document.getElementById("packWrapper").addEventListener("click", function() {
+            const packImage = document.getElementById("packImage");
+            packImage.style.transition = "opacity 0.5s";
+            packImage.style.opacity = 0;
+            
+            setTimeout(() => {
+                const chosenBlook = blooks[Math.floor(Math.random() * blooks.length)];
+                document.getElementById("blookReveal").innerHTML = `<img src="${chosenBlook.image}" alt="${chosenBlook.name}"><br>${chosenBlook.name}`;
+                document.getElementById("blookReveal").classList.remove("hidden");
+                saveBlook(chosenBlook);
+            }, 500);
+        });
+
+        function saveBlook(blook) {
+            let collectedBlooks = JSON.parse(localStorage.getItem("collectedBlooks")) || [];
+            collectedBlooks.push(blook);
+            localStorage.setItem("collectedBlooks", JSON.stringify(collectedBlooks));
+        }
+    </script>
+</body>
+</html>
 
