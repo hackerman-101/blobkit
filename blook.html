@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blooks</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <button onclick="window.location.href='stats.html'">Back to Stats</button>
+    </div>
+    
+    <div class="blook-container">
+        <h1>My Blooks</h1>
+        <div id="blookList"></div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const blookList = document.getElementById("blookList");
+            let collectedBlooks = JSON.parse(localStorage.getItem("collectedBlooks")) || [];
+            
+            if (collectedBlooks.length === 0) {
+                blookList.innerHTML = "<p>No Blooks collected yet</p>";
+            } else {
+                collectedBlooks.forEach(blook => {
+                    let blookItem = document.createElement("div");
+                    blookItem.classList.add("blook-item");
+                    blookItem.innerHTML = `<img src="${blook.image}" alt="${blook.name}"><p>${blook.name}</p>`;
+                    blookList.appendChild(blookItem);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
