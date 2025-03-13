@@ -203,3 +203,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+//all of this code, along with index.html, stats.html, script.js, style.css, market.html, and blook.html was made by Ai.
